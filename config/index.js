@@ -9,12 +9,12 @@ module.exports = function(){
 				openweathermap: {
 					apiDomain: 'api.openweathermap.org',
 					apiBaseUrl: '/data/2.5',
-					keyfile: 'openweathermap.key'
+					apiKey: process.env.OPENWEATHERMAP_KEY || ''
 				},
 				wunderground: {
 					apiDomain: 'api.wunderground.com',
 					apiBaseUrl: '/api/',
-					keyfile: 'wunderground.key'
+					apiKey: process.env.WUNDERGROUND_KEY || ''
 				}
 			};
 	
@@ -25,12 +25,12 @@ module.exports = function(){
 				openweathermap: {
 					apiDomain: 'api.openweathermap.org',
 					apiBaseUrl: '/data/2.5',
-					keyfile: 'openweathermap.key'
+					apiKey: process.env.OPENWEATHERMAP_KEY || ''
 				},
 				wunderground: {
 					apiDomain: 'api.wunderground.com',
 					apiBaseUrl: '/api/',
-					keyfile: 'wunderground.key'
+					apiKey: process.env.WUNDERGROUND_KEY || ''
 				}
 			};
 	}
