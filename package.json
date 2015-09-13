@@ -4,7 +4,8 @@
   "description": "The REST API for the mobile app 'Go Fly A Kite'.",
   "main": "app.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "start": "node app.js"
   },
   "author": "troystauffer@gmail.com",
   "license": "ISC",
