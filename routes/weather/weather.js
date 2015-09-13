@@ -11,9 +11,11 @@ Weather.prototype.getConditionsForZip = function(req, res) {
 	if (errors)
 		return res.status(400).json({ success: false, message: 'The data provided to the API was invalid or incomplete.', errors: errors });
 	weatherService.getConditionsForZip(req.params.zip, function(err, conditions) {
-		if (err)
+		if (err) {
 			res.status(400).json({ success: false, message: 'Error getting weather data.', errors: [err] });
-		res.json(conditions);
+		} else {
+			res.json(conditions);
+		}
 	});
 }
 

@@ -1,16 +1,19 @@
 {
   "name": "kite",
   "version": "1.0.0",
-  "description": "",
+  "description": "The REST API for the mobile app 'Go Fly A Kite'.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jasmine"
   },
-  "author": "",
+  "author": "troystauffer@gmail.com",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "express-validator": "^2.14.0"
+  },
+  "devDependencies": {
+    "jasmine": "^2.3.2"
   }
 }

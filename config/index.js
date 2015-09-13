@@ -5,6 +5,7 @@ module.exports = function(){
 		default:
 			return {
 				port: process.env.PORT || 3000,
+				weatherService: 'wunderground',
 				openweathermap: {
 					apiDomain: 'api.openweathermap.org',
 					apiBaseUrl: '/data/2.5',
@@ -20,6 +21,7 @@ module.exports = function(){
 		case 'production':
 			return {
 				port: process.env.PORT,
+				weatherService: 'wunderground',
 				openweathermap: {
 					apiDomain: 'api.openweathermap.org',
 					apiBaseUrl: '/data/2.5',
