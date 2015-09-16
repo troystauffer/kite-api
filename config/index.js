@@ -15,6 +15,11 @@ module.exports = function(){
 					apiDomain: 'api.wunderground.com',
 					apiBaseUrl: '/api/',
 					apiKey: process.env.WUNDERGROUND_KEY || ''
+				},
+				stormpath: {
+					id: '5IQUQJ7DLF0MRAFU78DM36MG1',
+					secret: process.env.STORMPATH_KEY || '',
+					appUri: 'https://api.stormpath.com/v1/applications/7fEjxYxu47G4JepLNEm1Ls'
 				}
 			};
 	
@@ -31,6 +36,11 @@ module.exports = function(){
 					apiDomain: 'api.wunderground.com',
 					apiBaseUrl: '/api/',
 					apiKey: process.env.WUNDERGROUND_KEY || ''
+				},
+				stormpath: {
+					id: '5IQUQJ7DLF0MRAFU78DM36MG1',
+					secret: process.env.STORMPATH_KEY || '',
+					appUri: 'https://api.stormpath.com/v1/applications/7fEjxYxu47G4JepLNEm1Ls'
 				}
 			};
 	}
