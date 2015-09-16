@@ -13,7 +13,8 @@
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
     "express-validator": "^2.14.0",
-    "sequelize": "^3.8.0"
+    "sequelize": "^3.8.0",
+    "sequelize-cli": "^1.9.1"
   },
   "devDependencies": {
     "jasmine": "^2.3.2"
