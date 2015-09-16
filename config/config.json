@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "rjjmgvhkgymeaa",
+    "password": "HRBllDthQGdlKlCCtoIlTXXh6X",
+    "database": "d27m3mfekac5ig",
+    "host": "ec2-50-16-229-89.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "protocol": "postgres",
+    "native": true
+  },
+  "production": {
+    "username": "rjjmgvhkgymeaa",
+    "password": "HRBllDthQGdlKlCCtoIlTXXh6X",
+    "database": "d27m3mfekac5ig",
+    "host": "ec2-50-16-229-89.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "protocol": "postgres",
+    "native": true
+  }
+}
