@@ -12,7 +12,10 @@
   "dependencies": {
     "body-parser": "^1.13.3",
     "express": "^4.13.3",
+    "express-jwt": "^3.1.0",
     "express-validator": "^2.14.0",
+    "passport": "^0.3.0",
+    "passport-local": "^1.0.0",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
     "pg-native": "^1.9.0",

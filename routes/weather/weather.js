@@ -6,7 +6,7 @@ function Weather(ws) {
 }
 
 Weather.prototype.getConditionsForZip = function(req, res) {
-	req.checkParams('zip', 'A valid zip code is required.').notEmpty().isNumeric();
+	req.checkParams('zip', 'A valid zip code is required.').notEmpty().isNumeric().isLength(5, 5);
 	var errors = req.validationErrors();
 	if (errors)
 		return res.status(400).json({ success: false, message: 'The data provided to the API was invalid or incomplete.', errors: errors });

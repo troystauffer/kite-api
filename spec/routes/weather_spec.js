@@ -23,8 +23,7 @@ describe('Weather routes', function() {
 	});
 
 	beforeEach(function() {
-		var Res = require('../util/res');
-		res = new Res();
+		res = require('../util/res');
 	})
 
 	it('should return conditions for a valid zip code', function() {
@@ -33,33 +32,37 @@ describe('Weather routes', function() {
 			checkParams: function() { return this; },
 			notEmpty: function() { return this; },
 			isNumeric: function() { return this; },
+			isLength: function() { return this; },
 			validationErrors: function() { return null; }
 		};
-		res.on('json', function(res) {
+		res.on('json', validateValidZipCode);
+		function validateValidZipCode(res) {
 			expect(res.response).toEqual(conditions);
-		})
+		}
 		weather.getConditionsForZip(req, res);
+		res.removeListener('json', validateValidZipCode);
 	});
 
 	it('should error when an invalid zip code is provided', function() {
-		var error = {"param": "zip", "msg": "A valid zip code is required.", "value": "asdf"};
+		var error = {"param": "zip", "msg": "A valid zip code is required.", "value": "1234"};
 		var response = {
 			"success": false,
 			"message": "The data provided to the API was invalid or incomplete.",
 			"errors": [error]
 		};
 		var req = { 
-			params: { zip: 'asdf' },
+			params: { zip: 1234 },
 			checkParams: function() { return this; },
 			notEmpty: function() { return this; },
 			isNumeric: function() { return this; },
+			isLength: function() { return this; },
 			validationErrors: function() { return [error] }
 		};
-		res.on('json', function(res) {
+		res.on('json', validateInvalidZipCode);
+		function validateInvalidZipCode(res) {
 			expect(res.response).toEqual(response);
-		})
+		}
 		weather.getConditionsForZip(req, res);
+		res.removeListener('json', validateInvalidZipCode);
 	});
-
-})
-
+});

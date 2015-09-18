@@ -2,6 +2,7 @@ var util = require('util');
 var events = require('events').EventEmitter;
 
 var res = function () {
+	return this;
 };
 
 util.inherits(res, events);
@@ -26,6 +27,4 @@ res.prototype.status = function(code) {
 	return this;
 };
 
-module.exports = function() {
-  return new res();
-};
+module.exports = res;
