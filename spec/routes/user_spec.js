@@ -1,5 +1,5 @@
 var path = require('path');
-describe('User routes', function() {
+describe('User', function() {
 
 	var res = {};
 	var Res = require('../util/res');
@@ -13,6 +13,7 @@ describe('User routes', function() {
 	var req = {
 		logIn: function(user, cb) { cb(null); }	
 	};
+	var db = require('../util/db');
 
 	beforeAll(function() {
 		passport.initialize();
@@ -21,35 +22,124 @@ describe('User routes', function() {
 
 	beforeEach(function() {
 		res = new Res();
-		user = new User(stormpath, passport);
+		user = new User(stormpath, passport, db);
 	});
 
-	it('should return an error with an unsuccessful authentication', function() {
-		user = new User(stormpathFailure, passport);
-		req.body = {
-			email: 'asdf',
-			password: 'asdf'
-		};
-		var result = { info: 'Login failed.' };
-		res.on('json', validateToken);
-		function validateToken(res) {
-			expect(res.response).toEqual(result);
-		}
-		user.auth(req, res, function(){});
-		res.removeListener('json', validateToken);
+	describe('authentication route', function() {
+		it('should return an error with an unsuccessful authentication', function() {
+			user = new User(stormpathFailure, passport);
+			req.body = {
+				email: 'asdf',
+				password: 'asdf'
+			};
+			var result = { info: 'Login failed.' };
+			res.on('json', validateToken);
+			res.on('status', validateStatus);
+			function validateToken(res) {
+				expect(res.response).toEqual(result);
+			}
+			function validateStatus(res) {
+				expect(res.code).toEqual(401);
+			}
+			user.auth(req, res, function(){});
+			res.removeListener('json', validateToken);
+			res.removeListener('status', validateStatus);
+		});
+
+		it('should return a valid token with a successful authentication', function() {
+			req.body = {
+				email: 'asdf',
+				password: 'asdf'
+			};
+			var result = { token: 'asdf1234' };
+			res.on('json', validateToken);
+			res.on('status', validateStatus);
+			function validateToken(res) {
+				expect(res.response).toEqual(result);
+			}
+			function validateStatus(res) {
+				expect(res.code).toEqual(200);
+			}
+			user.auth(req, res, function(){});
+			res.removeListener('json', validateToken);
+			res.removeListener('status', validateStatus);
+		});
 	});
 
-	it('should return a valid token with a successful authentication', function() {
-		req.body = {
-			email: 'asdf',
-			password: 'asdf'
-		};
-		var result = { token: 'asdf1234' };
-		res.on('json', validateToken);
-		function validateToken(res) {
-			expect(res.response).toEqual(result);
-		}
-		user.auth(req, res, function(){});
-		res.removeListener('json', validateToken);
+	describe('account creation route', function() {
+		beforeAll(function() {
+			req.checkBody = function(){ return this };
+			req.notEmpty = function(){ return this };
+			req.isEmail = function(){ return this };
+		});
+
+		it('should return an error when passed invalid data', function() {
+			var error = {"param": "email", "msg": "A valid email is required.", "value": "asdf"};
+			req.body = {
+				email: 'asdf'
+			};
+			req.validationErrors = function() { return [error] };
+
+			var result = { info: 'The data provided to the API was invalid or incomplete.', errors: [error] };
+			res.on('json', validateError);
+			res.on('status', validateStatus);
+			function validateError(res) {
+				expect(res.response).toEqual(result);
+			}
+			function validateStatus(res) {
+				expect(res.code).toEqual(400);
+			}
+			user.createAccount(req, res);
+			res.removeListener('json', validateError);
+			res.removeListener('status', validateStatus);
+		});
+
+		it('should return an error when stormpath rejects the password', function() {
+			user = new User(stormpathFailure, passport, db);
+			req.body = {
+				email: 'test@example.com',
+				password: 'weak',
+				firstname: 'Test',
+				lastname: 'Unit'
+			};
+			req.validationErrors = function() { return null };
+
+			var result = { info: 'Password invalid.', message: 'Password must contain at least 1 numeric character.' };
+			res.on('json', validateResult);
+			res.on('status', validateStatus);
+			function validateResult(res) {
+				expect(res.response).toEqual(result);
+			}
+			function validateStatus(res) {
+				expect(res.code).toEqual(400);
+			}
+			user.createAccount(req, res);
+			res.removeListener('json', validateResult);
+			res.removeListener('status', validateStatus);
+		});
+
+		it('should return a success message upon account creation', function() {
+			req.body = {
+				email: 'test@example.com',
+				password: 'Password1',
+				firstname: 'Test',
+				lastname: 'Unit'
+			};
+			req.validationErrors = function() { return null };
+
+			var result = { info: 'Account created successfully.' };
+			res.on('json', validateResult);
+			res.on('status', validateStatus);
+			function validateResult(res) {
+				expect(res.response).toEqual(result);
+			}
+			function validateStatus(res) {
+				expect(res.code).toEqual(201);
+			}
+			user.createAccount(req, res);
+			res.removeListener('json', validateResult);
+			res.removeListener('status', validateStatus);
+		});
 	});
+
 });
