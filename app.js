@@ -16,6 +16,7 @@ var application = null;
 var passport = require('passport');
 var jwt = require('express-jwt');
 var unsecuredRoutes = require(path.join(__dirname, 'config/unsecuredRoutes'));
+var db = require(path.join(__dirname, 'models/'));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -39,7 +40,7 @@ client.getApplication(config.stormpath.appUri, function(err, spApp) {
 
 	// define routes
 	require(path.join(__dirname, 'routes/weather'))(router, services[config.weatherService]);
-	require(path.join(__dirname, 'routes/user'))(router, application, passport);
+	require(path.join(__dirname, 'routes/user'))(router, application, passport, db);
 
 	app.listen(config.port);
 	console.log('Web app started on port ' + config.port + '...');

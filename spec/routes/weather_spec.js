@@ -3,6 +3,7 @@ describe('Weather routes', function() {
 
 	var weather = {};
 	var res = {};
+	var Res = require('../util/res');
 	var conditions = {
 		"current_observation": {
 			"weather": "Clear",
@@ -23,7 +24,7 @@ describe('Weather routes', function() {
 	});
 
 	beforeEach(function() {
-		res = require('../util/res');
+		res = new Res();
 	})
 
 	it('should return conditions for a valid zip code', function() {
@@ -46,8 +47,7 @@ describe('Weather routes', function() {
 	it('should error when an invalid zip code is provided', function() {
 		var error = {"param": "zip", "msg": "A valid zip code is required.", "value": "1234"};
 		var response = {
-			"success": false,
-			"message": "The data provided to the API was invalid or incomplete.",
+			"info": "The data provided to the API was invalid or incomplete.",
 			"errors": [error]
 		};
 		var req = { 

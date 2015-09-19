@@ -9,4 +9,8 @@ Stormpath.prototype.authenticateAccount = function(authReq, cb) {
 	return cb(null, result);
 }
 
+Stormpath.prototype.createAccount = function(account, cb) {
+	cb(null, {href:'http://example.com/testhref'});
+}
+
 module.exports = Stormpath;
