@@ -11,7 +11,10 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
-      name: {
+      firstname: {
+        type: Sequelize.STRING
+      },
+      lastname: {
         type: Sequelize.STRING
       },
       stormpathHref: {
