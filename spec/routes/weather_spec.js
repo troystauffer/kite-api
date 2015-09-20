@@ -1,9 +1,10 @@
 var path = require('path');
 describe('Weather routes', function() {
-
+	var Req = require(path.join(__dirname, '../util/req'));
+	var req = {};
 	var weather = {};
 	var res = {};
-	var Res = require('../util/res');
+	var Res = require(path.join(__dirname, '../util/res'));
 	var conditions = {
 		"current_observation": {
 			"weather": "Clear",
@@ -25,17 +26,11 @@ describe('Weather routes', function() {
 
 	beforeEach(function() {
 		res = new Res();
+		req = new Req();
 	})
 
 	it('should return conditions for a valid zip code', function() {
-		var req = { 
-			params: { zip: 12345 },
-			checkParams: function() { return this; },
-			notEmpty: function() { return this; },
-			isNumeric: function() { return this; },
-			isLength: function() { return this; },
-			validationErrors: function() { return null; }
-		};
+		req.params = { zip: 12345 };
 		res.on('json', validateValidZipCode);
 		function validateValidZipCode(res) {
 			expect(res.response).toEqual(conditions);
@@ -50,14 +45,8 @@ describe('Weather routes', function() {
 			"info": "The data provided to the API was invalid or incomplete.",
 			"errors": [error]
 		};
-		var req = { 
-			params: { zip: 1234 },
-			checkParams: function() { return this; },
-			notEmpty: function() { return this; },
-			isNumeric: function() { return this; },
-			isLength: function() { return this; },
-			validationErrors: function() { return [error] }
-		};
+		req.params = { zip: 1234 };
+		req.validationErrors = function() { return [error] };
 		res.on('json', validateInvalidZipCode);
 		function validateInvalidZipCode(res) {
 			expect(res.response).toEqual(response);

@@ -17,9 +17,9 @@ module.exports = function(){
 					apiKey: process.env.WUNDERGROUND_KEY || ''
 				},
 				stormpath: {
-					id: '5IQUQJ7DLF0MRAFU78DM36MG1',
+					id: '3Y9M3AP39LWZVNL7CNFLVD5YK',
 					secret: process.env.STORMPATH_KEY || '',
-					appUri: 'https://api.stormpath.com/v1/applications/7fEjxYxu47G4JepLNEm1Ls'
+					appUri: 'https://api.stormpath.com/v1/applications/2D4wvGjZmSq0yTobp5YCDa'
 				}
 			};
 	

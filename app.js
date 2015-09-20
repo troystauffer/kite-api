@@ -40,7 +40,8 @@ client.getApplication(config.stormpath.appUri, function(err, spApp) {
 
 	// define routes
 	require(path.join(__dirname, 'routes/weather'))(router, services[config.weatherService]);
-	require(path.join(__dirname, 'routes/user'))(router, application, passport, db);
+	require(path.join(__dirname, 'routes/user'))(router, application, passport, db, config.stormpath.secret);
+	require(path.join(__dirname, 'routes/notification'))(router, db);
 
 	app.listen(config.port);
 	console.log('Web app started on port ' + config.port + '...');
