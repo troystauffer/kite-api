@@ -6,14 +6,13 @@ describe('User', function() {
 	var user = {};
 	var User = require(path.join(__dirname, '../../routes/user/user'));
 	var passport = require('passport');
-	var Stormpath = require('../util/stormpath');
+	var Stormpath = require(path.join(__dirname, '../util/stormpath'));
 	var stormpath = new Stormpath();
-	var StormpathFailure = require('../util/stormpathfailure');
+	var StormpathFailure = require(path.join(__dirname, '../util/stormpathfailure'));
 	var stormpathFailure = new StormpathFailure();
-	var req = {
-		logIn: function(user, cb) { cb(null); }	
-	};
-	var db = require('../util/db');
+	var req = {};
+	var Req = require(path.join(__dirname, '../util/req'));
+	var db = require(path.join(__dirname, '../util/db'));
 
 	beforeAll(function() {
 		passport.initialize();
@@ -23,6 +22,7 @@ describe('User', function() {
 	beforeEach(function() {
 		res = new Res();
 		user = new User(stormpath, passport, db);
+		req = new Req();
 	});
 
 	describe('authentication route', function() {
@@ -67,11 +67,6 @@ describe('User', function() {
 	});
 
 	describe('account creation route', function() {
-		beforeAll(function() {
-			req.checkBody = function(){ return this };
-			req.notEmpty = function(){ return this };
-			req.isEmail = function(){ return this };
-		});
 
 		it('should return an error when passed invalid data', function() {
 			var error = {"param": "email", "msg": "A valid email is required.", "value": "asdf"};
@@ -102,7 +97,6 @@ describe('User', function() {
 				firstname: 'Test',
 				lastname: 'Unit'
 			};
-			req.validationErrors = function() { return null };
 
 			var result = { info: 'Password invalid.', message: 'Password must contain at least 1 numeric character.' };
 			res.on('json', validateResult);
@@ -125,7 +119,6 @@ describe('User', function() {
 				firstname: 'Test',
 				lastname: 'Unit'
 			};
-			req.validationErrors = function() { return null };
 
 			var result = { info: 'Account created successfully.' };
 			res.on('json', validateResult);
