@@ -13,6 +13,7 @@ describe('User', function() {
 	var req = {};
 	var Req = require(path.join(__dirname, '../util/req'));
 	var db = require(path.join(__dirname, '../util/db'));
+	var log = require(path.join(__dirname, '../util/log'));
 
 	beforeAll(function() {
 		passport.initialize();
@@ -21,7 +22,7 @@ describe('User', function() {
 
 	beforeEach(function() {
 		res = new Res();
-		user = new User(stormpath, passport, db);
+		user = new User(stormpath, passport, db, 'asdf', log);
 		req = new Req();
 	});
 
@@ -90,7 +91,7 @@ describe('User', function() {
 		});
 
 		it('should return an error when stormpath rejects the password', function() {
-			user = new User(stormpathFailure, passport, db);
+			user = new User(stormpathFailure, passport, db, 'asdf', log);
 			req.body = {
 				email: 'test@example.com',
 				password: 'weak',

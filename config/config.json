@@ -2,15 +2,5 @@
   "development": {
     "dialect": "sqlite",
     "storage": "./kite-db.development.sqlite"
-  },
-  "production": {
-    "use_env_variable": "POSTGRES_CONNECTION_STRING",
-    "dialect": "postgres",
-    "protocol": "postgres",
-    "native": true,
-    "ssl": true,
-    "dialectOptions": {
-      "ssl": true
-    }
   }
 }

@@ -1,4 +1,5 @@
-var weatherService = {};
+'use strict';
+let weatherService = {};
 
 function Weather(_weatherService) {
 	weatherService = _weatherService;
@@ -16,6 +17,6 @@ Weather.prototype.getConditionsForZip = function(req, res) {
 			res.json(conditions);
 		}
 	});
-}
+};
 
 module.exports = Weather;

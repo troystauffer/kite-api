@@ -1,4 +1,5 @@
-var db = {};
+'use strict';
+let db = {};
 
 function Notification(_db) {
 	db = _db;
@@ -9,7 +10,7 @@ Notification.prototype.addNotification = function(req, res) {
 	if (!req.user.hasOwnProperty('sub')) return res.status(401).json({info:'Token invalid.'});
 	req.checkBody('zip', 'A valid zip code is required.').notEmpty().isNumeric().isLength(5, 5);
 	req.checkBody('optimum', 'A valid boolean value required for optimum.').isBoolean();
-	var errors = req.validationErrors();
+	let errors = req.validationErrors();
 	if (errors) return res.status(400).json({ info: 'The data provided to the API was invalid or incomplete.', errors: errors });
 	db.User.findOne({ where: {stormpathHref:req.user.sub}}).then(function(user) {
 		if(!user) return res.status(500).json({info:'Unable to load user details.'});
@@ -30,6 +31,6 @@ Notification.prototype.addNotification = function(req, res) {
 			}
 		});
 	});
-}
+};
 
 module.exports = Notification;

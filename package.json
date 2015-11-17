@@ -2,18 +2,26 @@
   "name": "kite",
   "version": "1.0.0",
   "description": "The REST API for the mobile app 'Go Fly A Kite'.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "jasmine",
-    "start": "node app.js"
+    "test": "NODE_ENV=test jasmine && NODE_ENV=test mocha spec/features/ && eslint .",
+    "start": "node index.js"
   },
   "author": "troystauffer@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/troystauffer/kite-api.git"
+  },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.13.3",
+    "bunyan": "^1.5.1",
+    "chai": "^3.4.1",
     "express": "^4.13.3",
     "express-jwt": "^3.1.0",
     "express-validator": "^2.14.0",
+    "jasmine": "^2.3.2",
+    "lodash": "^3.10.1",
     "njwt": "^0.2.2",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
@@ -22,10 +30,11 @@
     "pg-native": "^1.9.0",
     "sequelize": "^3.8.0",
     "sequelize-cli": "^1.9.1",
-    "stormpath": "^0.11.4"
+    "stormpath": "^0.11.4",
+    "supertest": "^1.1.0"
   },
   "devDependencies": {
-    "jasmine": "^2.3.2",
+    "eslint": "^1.9.0",
     "sqlite3": "^3.1.0"
   }
 }
