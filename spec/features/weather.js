@@ -1,8 +1,6 @@
 'use strict';
 
-const path = require('path');
 const request = require('supertest');
-const chai = require('chai');
 
 let app = null;
 
@@ -10,8 +8,8 @@ function Weather() {
 	return this;
 }
 
-Weather.prototype.setApp = function(_app) {
-	app = _app;
+Weather.prototype.init = function(data) {
+	app = data.app;
 }
 
 Weather.prototype.run = function() {

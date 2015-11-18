@@ -8,7 +8,9 @@ function Notification(_db) {
 
 Notification.prototype.addNotification = function(req, res) {
 	if (!req.user.hasOwnProperty('sub')) return res.status(401).json({info:'Token invalid.'});
-	req.checkBody('zip', 'A valid zip code is required.').notEmpty().isNumeric().isLength(5, 5);
+	req.checkBody('zip', 'Zip code is required.').notEmpty();
+	req.checkBody('zip', 'Zip code must be numeric.').isNumeric();
+	req.checkBody('zip', 'Zip code must be 5 digits.').isLength(5, 5);
 	req.checkBody('optimum', 'A valid boolean value required for optimum.').isBoolean();
 	let errors = req.validationErrors();
 	if (errors) return res.status(400).json({ info: 'The data provided to the API was invalid or incomplete.', errors: errors });

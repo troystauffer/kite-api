@@ -14,13 +14,9 @@ function User() {
 	return this;
 }
 
-User.prototype.setApp = function(_app) {
-	app = _app;
-}
-
-//stormpath
-User.prototype.setApplication = function(_application) {
-	application = _application;
+User.prototype.init = function(data) {
+	app = data.app;
+	application = data.application;
 }
 
 User.prototype.run = function() {
