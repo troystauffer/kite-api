@@ -51,7 +51,8 @@ module.exports = function(){
 			port: process.env.PORT || 3000,
 			database: {
 				'dialect': 'sqlite',
-				'storage': './kite-db.development.sqlite'
+				'storage': './kite-db.development.sqlite',
+				logging: false
 			}, 
 			log: {
 				name: 'kite-api-tests',

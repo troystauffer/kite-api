@@ -10,17 +10,13 @@ const validator = require('express-validator');
 const services = {};
 services.wunderground = new (require(path.join(__dirname, 'lib/wunderground-service')))(config.wunderground, log);
 const router = express.Router();
-const stormpath = require('stormpath');
-const apiKey = new stormpath.ApiKey( config.stormpath.id, config.stormpath.secret );
-const client = new stormpath.Client({apiKey: apiKey});
 const passport = require('passport');
 const jwt = require('express-jwt');
 const unsecuredRoutes = require(path.join(__dirname, 'config/unsecuredRoutes'));
 const db = new (require(path.join(__dirname, 'models/')))(config.database);
 const EventEmitter = require('events').EventEmitter;
 const util = require('util');
-
-let application = null;
+const stormpath = new (require(path.join(__dirname, 'lib/stormpath')))(config.stormpath, log);
 
 function App() {
 	EventEmitter.call(this);
@@ -40,10 +36,7 @@ function App() {
 
 	app.use('/v1', router);
 
-	client.getApplication(config.stormpath.appUri, function(err, spApp) {
-		if (err) throw err;
-		application = spApp;
-
+	stormpath.on('connected', function(application) {
 		// define routes
 		require(path.join(__dirname, 'routes/weather'))(router, services[config.weatherService]);
 		require(path.join(__dirname, 'routes/user'))(router, application, passport, db, config.stormpath.secret, log);
@@ -53,6 +46,7 @@ function App() {
 		log.info('Web app started on port ' + config.port + '...');
 		self.emit('listening', app);
 	});
+	stormpath.connect();
 }
 
 App.prototype.getApp = function() { return app; };

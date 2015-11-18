@@ -60,7 +60,8 @@ User.prototype.auth = function(req, res, next) {
 };
 
 User.prototype.createAccount = function(req, res) {
-	req.checkBody('email', 'A valid email is required.').notEmpty().isEmail();
+	req.checkBody('email', 'Email is required.').notEmpty();
+	req.checkBody('email', 'Email must be a valid email address.').isEmail();
 	req.checkBody('password', 'A valid password is required.').notEmpty();
 	req.checkBody('firstname', 'A valid first name is required.').notEmpty();
 	req.checkBody('lastname', 'A valid last name is required.').notEmpty();
