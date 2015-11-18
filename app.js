@@ -42,9 +42,9 @@ function App() {
 		require(path.join(__dirname, 'routes/user'))(router, application, passport, db, config.stormpath.secret, log);
 		require(path.join(__dirname, 'routes/notification'))(router, db);
 
-		app.listen(config.port);
+		let server = app.listen(config.port);
 		log.info('Web app started on port ' + config.port + '...');
-		self.emit('listening', app);
+		self.emit('listening', {server: server, app: app});
 	});
 	stormpath.connect();
 }
