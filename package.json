@@ -4,7 +4,7 @@
   "description": "The REST API for the mobile app 'Go Fly A Kite'.",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jasmine && NODE_ENV=test mocha spec/features/ && eslint .",
+    "test": "NODE_ENV=test node --harmony ./node_modules/jasmine/bin/jasmine && NODE_ENV=test mocha --harmony spec/features/ && eslint .",
     "start": "node index.js"
   },
   "author": "troystauffer@gmail.com",
