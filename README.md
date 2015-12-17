@@ -4,3 +4,4 @@ This Node.js/Express project is the REST API for a client app that allows users 
 ## Deployment
 This codebase is currently deployed to heroku and can be demo'd at https://kite-api.herokuapp.com.
 
+Circle CI Status: [![Circle CI](https://circleci.com/gh/troystauffer/kite-api/tree/master.svg?style=svg)](https://circleci.com/gh/troystauffer/kite-api/tree/master)
