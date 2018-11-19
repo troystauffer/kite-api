@@ -1,0 +1,20 @@
+{
+  "development": {
+    "username": "root",
+    "password": "",
+    "database": "kite_api_dev",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
+  },
+  "test": {
+    "dialect": "sqlite",
+    "storage": "./kite_api_test.sqlite"
+  }
+}
